@@ -182,7 +182,7 @@ The following image tags are published:
 
 For more information look at the Packages overview [here](https://github.com/tijmenvandenbrink/enviroplus_exporter/pkgs/container/enviroplus_exporter).
 
-2. Or build it yourself
+2. Or build it yourself, using Docker
 
 ```sh
 docker build -t enviroplus-exporter .
@@ -194,7 +194,18 @@ Or using [BuildKit](https://docs.docker.com/develop/develop-images/build_enhance
 docker buildx build --platform linux/arm/v7,linux/arm64/v8 .
 ```
 
-3. Running
+3. Or build it yourself, using Melange + Apko
+
+Choose a tag for the image with and substitue it for _foo_ below. If you're not going to push it anywhere, anything will do.
+
+```sh
+melange keygen
+melange build --arch aarch64,amd64 --signing-key melange.rsa melange.yaml
+apko build --keyring-append melange.rsa.pub --arch aarch64,amd64 apko.yaml ghcr.io/foo/enviroplus-exporter oci.tar
+docker load < oci.tar
+```
+
+4. Running
 
 ```sh
 docker run -d enviroplus-exporter -d -p 8000:8000 --device=/dev/i2c-1 --device=/dev/gpiomem --device=/dev/ttyAMA0 enviroplus-exporter
