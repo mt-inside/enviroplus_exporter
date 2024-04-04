@@ -130,3 +130,7 @@ dmypy.json
 
 # IntelliJ IDE
 .idea/
+
+# Melange + Apko keys
+/melange.rsa*
+/packages
